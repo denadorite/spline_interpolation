@@ -3,7 +3,10 @@
 #include <string.h>
 #include <stdbool.h>
 #include <math.h>
+
+#if __unix__
 #include "gnuplot_i.h"
+#endif
 
 // Проверка, является ли прогоночная матрица трехдиагональной
 bool isJacobiMatrix(double **a, int n)
@@ -106,8 +109,10 @@ double * through_matrix_solution(double coeffts[], double b_vals[], int n)
 #define SECONDS 60
 
 // Выводим полученные графики сплайнов в gnuplot
+
 void plot_graphs(char **tsplines)
 {
+    #if __unix__
     gnuplot_ctrl *h1, *h2;
     int i;
 
@@ -151,6 +156,7 @@ void plot_graphs(char **tsplines)
     sleep(SECONDS);
     gnuplot_close(h1);
     gnuplot_close(h2);
+    #endif
 }
 
 int main()
